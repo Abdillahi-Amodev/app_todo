@@ -1,23 +1,45 @@
-import logo from './logo.svg';
+import React,{useState} from 'react'
 import './App.css';
+import { v4 as uuidv4 } from 'uuid';
+
 
 function App() {
+  const [item,setItem]=useState('')
+  const [todos,setTodos]=useState([])
+
+  const handleSubmit=()=>{
+    if (item ==='') {
+      alert('Must not be Empty')
+    }else{
+      setTodos([{id:uuidv4(),item},...todos])
+      setItem('')
+    }
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+        <div className= "inputDiv">
+          
+           <input type="text" placeholder='Todo ....'
+           value={item}
+           onChange={(e)=>{
+            setItem(e.target.value)
+           }}
+           />
+           <button onClick={()=>handleSubmit()}>Add</button> 
+        </div>
+        {
+          todos.map(todo=>{
+          return  <div className='displayResulting' key={todo.id}>
+        <p className='para'>{todo.item}</p>
+        
+        </div>
+          })
+
+          }
+    
+     
+  
     </div>
   );
 }
